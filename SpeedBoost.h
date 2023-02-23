@@ -4,16 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Target.generated.h"
+#include "SpeedBoost.generated.h"
+
+class UBoxComponent;
 
 UCLASS()
-class TA2FEB_API ATarget : public AActor
+class TA2FEB_API ASpeedBoost : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATarget();
+	ASpeedBoost();
+
+	/** Components */
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* StaticMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	UBoxComponent* Collider;
 
 protected:
 	// Called when the game starts or when spawned
@@ -24,22 +34,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
-
-	/** Components */
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UBoxComponent* Collider{ nullptr };
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UStaticMeshComponent* StaticMesh;
-
 	/** Public Functions */
-
-	UFUNCTION()
-	void DestroyTarget();
-
-	UFUNCTION()
-	void GainScore();
 
 	UFUNCTION()
 		void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -47,13 +42,4 @@ public:
 			bool bFromSweep, const FHitResult& SweepResult);
 
 
-	/** Public Variables */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float MovementSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float RotationSpeed;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
-	float XKillPosition;
 };

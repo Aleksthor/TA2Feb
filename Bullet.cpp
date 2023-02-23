@@ -55,11 +55,9 @@ void ABullet::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherA
 {
 	if (OtherActor->IsA<ATarget>())
 	{
+		Cast<ATarget>(OtherActor)->GainScore();
 		Cast<ATarget>(OtherActor)->DestroyTarget();
-
-		SetActorHiddenInGame(true);
-		SetActorEnableCollision(false);
-		this->Destroy();
+		DestroyBullet();
 
 	}
 }

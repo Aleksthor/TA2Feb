@@ -10,6 +10,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UStaticMesh;
 class ABullet;
+class UBoxComponent;
 
 
 UCLASS()
@@ -37,6 +38,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* StaticMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UBoxComponent* Collider;
+
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArm;
 
@@ -50,7 +54,7 @@ public:
 
 
 	/** Public Variables */
-
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float Speed;
 
@@ -63,11 +67,34 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
 	float ShotSpeed;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	int Lives;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "My Variables")
+	int Score;
+
+	/** Public Functions */
+public:
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex,
+				bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void HitByTarget();
+
+	UFUNCTION()
+	void StartSpeedBoost(float seconds);
+	
+
 	/** Private Variables */
 private:
 
 	float XInput;
 	float YInput;
+
+	float SpeedBoostTimer;
+	float SpeedBoost;
 
 
 private:
@@ -77,6 +104,8 @@ private:
 	void Right(float input);
 
 	void Shoot();
+
+	void Dodge();
 
 	void StartShooting();
 	void StopShooting();
